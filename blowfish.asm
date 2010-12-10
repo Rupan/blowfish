@@ -14,23 +14,22 @@ USE64
 ;  RDI - Blowfish context
 ;  RSI - 32-bit value 'x'
 ; destroys:
+;  RCX - temporary storage
 ;  R8  - temporary storage
 ;  RAX - return value
 global F
 F:
-	mov r8,  rsi
-	shr r8,  24
-	and r8,  0xFF
+	mov rcx, rsi
+	rol ecx, 8
+	movzx r8,  cl
 	mov eax, [rdi+SBOX(0)+WORD_LEN*r8]	; y = ctx->S[0][a]
-	mov r8,  rsi
-	shr r8,  16
-	and r8,  0xFF
+	rol ecx, 8
+	movzx r8,  cl
 	add eax, [rdi+SBOX(1)+WORD_LEN*r8]	; y += ctx->S[1][b]
-	mov r8,  rsi
-	shr r8,  8
-	and r8,  0xFF
+	rol ecx, 8
+	movzx r8,  cl
 	xor eax, [rdi+SBOX(2)+WORD_LEN*r8]	; y ^= ctx->S[2][c];
-	mov r8,  rsi
-	and r8,  0xFF
+	rol ecx, 8
+	movzx r8,  cl
 	add eax, [rdi+SBOX(3)+WORD_LEN*r8]	; y += ctx->S[3][d];
 	ret
