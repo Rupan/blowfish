@@ -10,7 +10,12 @@ USE64
 
 [section .text]
 
-; destroys registers R8, RAX
+; arguments:
+;  RDI - Blowfish context
+;  RSI - 32-bit value 'x'
+; destroys:
+;  R8  - temporary storage
+;  RAX - return value
 global F
 F:
 	mov r8,  rsi
