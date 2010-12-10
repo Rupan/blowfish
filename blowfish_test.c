@@ -19,14 +19,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <stdio.h>
 #include "blowfish.h"
 
-
 void main(void) {
-  unsigned long L = 1, R = 2;
+  uint32_t L = 1, R = 2;
   BLOWFISH_CTX ctx;
 
-  Blowfish_Init (&ctx, (unsigned char*)"TESTKEY", 7);
+  Blowfish_Init (&ctx, (uint8_t *)"TESTKEY", 7);
   Blowfish_Encrypt(&ctx, &L, &R);
-  printf("%08lX %08lX\n", L, R);
+  printf("%08lX %08lX\n", (long unsigned int)L, (long unsigned int)R);
   if (L == 0xDF333FD2L && R == 0x30A71BB4L)
 	  printf("Test encryption OK.\n");
   else
